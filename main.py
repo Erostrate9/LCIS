@@ -1,9 +1,9 @@
 def LCIS(S, T):
     m = len(S)
-    n = len(S)
-    dp = [0] * m
-    prev = [[-1] * n] * m
-    lcis = [''] * (min(m, n))
+    n = len(T)
+    dp = [0 for x in range(max(m,n))]
+    prev = [[-1 for x in range(n)] for y in range(m)]
+    lcis = ['' for x in range(min(m, n))]
     for i in range(m):
         # l stands for the length of LCIS
         # p stands for the end of LCIS
@@ -19,14 +19,15 @@ def LCIS(S, T):
                 if dp[j] > l:
                     l = dp[j]
                     p = j
-    l, p = 0, -1
+    l=0
+    p=-1
     for i in range(n):
         if (dp[i] > l):
             l = dp[i]
             p = i
     j, k = p, l
-    for i in range(m - 1, -1, -1):
-        if prev[i][j] != -1:
+    for i in range(m - 1, -m-n, -1):
+        if (i<0 or prev[i][j] != -1):
             k -= 1
             lcis[k] = T[j]
             j = prev[i][j]
@@ -36,8 +37,8 @@ def LCIS(S, T):
 
 
 def __main__():
-    S = [1, 2, 4, 3, 4]
-    T = [4, 2, 1, 4, 2, 3, 1]
+    S = [1, 2, 4, 3, 4,5,8,7,1,2,4,8]
+    T = [4, 2, 1, 4, 2, 3, 1,12,3,5,6,7,8,1,2,4]
     l, lcis = LCIS(S, T)
     print("Length of LCIS is", l)
     print("LCIS is:")
